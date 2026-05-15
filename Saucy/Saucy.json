@@ -1,10 +1,10 @@
 {
   "Author": "Taurenkey (Puni.sh)",
   "Name": "Saucy",
-  "Punchline": "When working for MGP is too much effort.",
-  "Description": "Automates certain Gold Saucer mini-games.",
+  "Punchline": "當金碟幣取得太費力時",
+  "Description": "自動進行部分金碟遊樂場小遊戲。",
   "InternalName": "Saucy",
-  "IconUrl": "https://github.com/magejiaaa/Saucy/blob/dev/Saucy/Icon.png",
+  "IconUrl": "https://raw.githubusercontent.com/magejiaaa/Saucy/master/Saucy/Icon.png",
   "RepoUrl": "https://github.com/PunishXIV/Saucy",
   "DalamudApiLevel": 12,
   "Tags": [
