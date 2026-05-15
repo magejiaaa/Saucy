@@ -4,7 +4,7 @@
   "Punchline": "When working for MGP is too much effort.",
   "Description": "Automates certain Gold Saucer mini-games.",
   "InternalName": "Saucy",
-  "IconUrl": "https://love.puni.sh/resources/saucy.png",
+  "IconUrl": "https://github.com/magejiaaa/Saucy/blob/dev/Saucy/Icon.png",
   "RepoUrl": "https://github.com/PunishXIV/Saucy",
   "DalamudApiLevel": 12,
   "Tags": [
@@ -12,5 +12,5 @@
     "mgp",
     "automation"
   ],
-  "ChangeLog":  "- Patch update"
+  "ChangeLog": "- Patch update"
 }
