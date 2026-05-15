@@ -10,7 +10,7 @@
 		<Platforms>x64</Platforms>
 		<LangVersion>preview</LangVersion>
 		<DalamudDevPlugins>$(appdata)\XIVLauncher\devPlugins\Saucy\</DalamudDevPlugins>
-		<DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\dev\</DalamudLibPath>
+		<DalamudLibPath>$(appdata)\XIVLauncher\addon\Hooks\12.0.1.4\</DalamudLibPath>
 		<DalamudPluginPath>$(appdata)\XIVLauncher\installedPlugins\Saucy\$(version)</DalamudPluginPath>
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 		<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>

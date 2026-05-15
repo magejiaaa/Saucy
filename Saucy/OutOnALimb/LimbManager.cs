@@ -452,37 +452,37 @@ public unsafe class LimbManager : IDisposable
     public void DrawSettings()
     {
         var save = false;
-        ImGuiEx.TextWrapped($"How to use: enable module, walk up to the Out on a Limb machine in Gold Saucer, input number of games you want to play to play automatically or access the machine manually to play one game.");
+        ImGuiEx.TextWrapped($"使用方式：啟用模組後，走到金碟遊樂場的孤樹無援機台前。輸入要自動遊玩的次數，或手動操作機台遊玩一局。");
         if (TidyChat)
-            ImGuiEx.TextWrapped(ImGuiColors.DalamudRed, $@"Tidychat Warning: Please ensure you do not have ""You sense something..."" messages (Advanced -> System messages) hidden or this will not work");
+            ImGuiEx.TextWrapped(ImGuiColors.DalamudRed, $@"TidyChat 警告：請確認你沒有隱藏「You sense something...」訊息（進階 -> 系統訊息），否則此功能無法運作。");
         ImGui.Separator();
-        save |= ImGui.Checkbox($"Enable", ref C.EnableLimb);
+        save |= ImGui.Checkbox($"啟用", ref C.EnableLimb);
         ImGui.SetNextItemWidth(100f);
-        ImGui.InputInt("Games to play", ref GamesToPlay.ValidateRange(0, 9999));
+        ImGui.InputInt("遊玩次數", ref GamesToPlay.ValidateRange(0, 9999));
         ImGui.SameLine();
-        if (ImGui.Button("Max")) GamesToPlay = 9999;
-        ImGui.Checkbox($"Stop at next double down", ref Exit);
+        if (ImGui.Button("最大")) GamesToPlay = 9999;
+        ImGui.Checkbox($"下次加倍時停止", ref Exit);
 
         ImGui.Separator();
         ImGui.SetNextItemWidth(100f);
-        save |= ImGuiEx.EnumCombo("Difficulty", ref C.LimbDifficulty);
+        save |= ImGuiEx.EnumCombo("難度", ref C.LimbDifficulty);
         ImGui.SetNextItemWidth(100f);
-        save |= ImGuiEx.SliderInt($"Tolerance", ref C.Tolerance.ValidateRange(1, 4), 1, 4);
+        save |= ImGuiEx.SliderInt($"容許誤差", ref C.Tolerance.ValidateRange(1, 4), 1, 4);
         ImGui.SameLine();
-        if (ImGui.Button("Default##1")) C.Tolerance = new LimbConfig().Tolerance;
+        if (ImGui.Button("預設##1")) C.Tolerance = new LimbConfig().Tolerance;
         var req = CalcRequiredFPS();
         var current = ImGui.GetIO().Framerate;
         var delta = current - req;
-        ImGuiEx.TextWrapped(delta > -1 ? ImGuiColors.ParsedGreen : (delta > -(req * 0.15f) ? ImGuiColors.DalamudYellow : ImGuiColors.DalamudRed), $"Required framerate: {req}\nYour framerate: {(int)current}");
-        ImGuiEx.TextWrapped($"Reducing tolerance or difficulty will reduce required framerate.");
+        ImGuiEx.TextWrapped(delta > -1 ? ImGuiColors.ParsedGreen : (delta > -(req * 0.15f) ? ImGuiColors.DalamudYellow : ImGuiColors.DalamudRed), $"需求幀率：{req}\n目前幀率：{(int)current}");
+        ImGuiEx.TextWrapped($"降低容許誤差或難度可降低需求幀率。");
         ImGui.SetNextItemWidth(100f);
-        save |= ImGui.DragInt($"Step", ref C.Step, 0.05f);
+        save |= ImGui.DragInt($"步進值", ref C.Step, 0.05f);
         ImGui.SameLine();
-        if (ImGui.Button("Default##2")) C.Step = new LimbConfig().Step;
+        if (ImGui.Button("預設##2")) C.Step = new LimbConfig().Step;
         ImGui.SetNextItemWidth(100f);
-        save |= ImGui.DragInt($"Stop at remaining time with big win", ref C.StopAt, 0.5f);
+        save |= ImGui.DragInt($"大獎時剩餘秒數低於此值便停止", ref C.StopAt, 0.5f);
         ImGui.SetNextItemWidth(100f);
-        save |= ImGui.DragInt($"Stop at remaining time with little win", ref C.HardStopAt, 0.5f);
+        save |= ImGui.DragInt($"小獎時剩餘秒數低於此值便停止", ref C.HardStopAt, 0.5f);
 
         if (save) Saucy.Config.Save();
     }
@@ -508,9 +508,9 @@ public unsafe class LimbManager : IDisposable
                 var reference = addon->GetNodeById(NodeIDs[C.LimbDifficulty]);
                 var cursor = addon->GetNodeById(39);
                 var iCursor = 400 - cursor->Height;
-                if (iCursor > reference->Y && iCursor < reference->Y + Heights[C.LimbDifficulty]) ImGuiEx.Text($"Yes");
-                ImGuiEx.Text($"Reference: {reference->Y}");
-                ImGuiEx.Text($"Cursor: {cursor->Height}");
+                if (iCursor > reference->Y && iCursor < reference->Y + Heights[C.LimbDifficulty]) ImGuiEx.Text($"是");
+                ImGuiEx.Text($"參考值：{reference->Y}");
+                ImGuiEx.Text($"游標：{cursor->Height}");
             }
         }
         {
@@ -519,26 +519,26 @@ public unsafe class LimbManager : IDisposable
                 var reader = new ReaderMiniGameBotanist(addon);
                 var button = addon->GetComponentButtonById(24);
                 var cursor = GetCursor();
-                ImGuiEx.Text($"Cursor: {cursor}");
-                ImGui.Checkbox("Only request", ref OnlyRequest);
+                ImGuiEx.Text($"游標：{cursor}");
+                ImGui.Checkbox("只使用指定值", ref OnlyRequest);
                 ImGui.SetNextItemWidth(100f);
-                ImGui.InputInt("Request input", ref RequestInput);
+                ImGui.InputInt("指定輸入", ref RequestInput);
                 ImGui.SameLine();
-                if (ImGui.Button("Request")) Request = RequestInput;
+                if (ImGui.Button("指定")) Request = RequestInput;
                 ImGui.SameLine();
-                if (ImGui.Button("Reset")) Request = null;
-                ImGuiEx.Text($"Button enabled: {button->IsEnabled}");
-                ImGuiEx.Text($"Seconds remaining: {reader.SecondsRemaining}");
-                if (ImGui.Button("Click"))
+                if (ImGui.Button("重設")) Request = null;
+                ImGuiEx.Text($"按鈕可用：{button->IsEnabled}");
+                ImGuiEx.Text($"剩餘秒數：{reader.SecondsRemaining}");
+                if (ImGui.Button("點擊"))
                 {
                     if (button->IsEnabled)
                     {
                         button->ClickAddonButton(addon);
                     }
                 }
-                ImGuiEx.Text($"Next: {Next}, MinIndex: {MinIndex}, rec={RecordMinIndex}");
-                ImGuiEx.Text($"Starting points:\n{StartingPoints.Print(", ")}");
-                ImGuiEx.Text($"Results:\n{Results.Select(x => $"{x.Position}={x.Power}").Print("\n")}");
+                ImGuiEx.Text($"下一個：{Next}, 最小索引：{MinIndex}, 記錄={RecordMinIndex}");
+                ImGuiEx.Text($"起始點：\n{StartingPoints.Print(", ")}");
+                ImGuiEx.Text($"結果：\n{Results.Select(x => $"{x.Position}={x.Power}").Print("\n")}");
             }
         }
     }
